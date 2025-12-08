@@ -49,8 +49,8 @@
     },
     "Browse": {
         "browseTitleAll": "All",
-        "browseTitleDroids": " droids",
-        "browseTitleVehicles": " vehicles"
+        "browseTitleDroids": "All droids",
+        "browseTitleVehicles": "All vehicles"
     },
     
     "Checkout": {

@@ -49,8 +49,8 @@
     },
     "Browse": {
         "browseTitleAll": "すべての",
-        "browseTitleDroids": "ドロイド",
-        "browseTitleVehicles": "乗り物"
+        "browseTitleDroids": "すべてのドロイド",
+        "browseTitleVehicles": "すべての乗り物"
     },
     
     "Checkout": {
