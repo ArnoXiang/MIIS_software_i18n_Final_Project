@@ -12,17 +12,22 @@ let Browse = {
 
         let productMap = null;
 
+        // FIX: Avoid string concatenation by using complete localized strings
+        // Each title string is now a full, translatable unit instead of fragments
         let title;
 
         if(type == "droids") {
             productMap = productList.get('droids');
+            // Retrieve complete localized title for droids category
             title = i18n.getString("Browse", "browseTitleDroids");
         }
         else if(type == "vehicles") {
             productMap = productList.get('vehicles');
+            
             title = i18n.getString("Browse", "browseTitleVehicles");
         }
         else {
+            
             title = i18n.getString("Browse", "browseTitleAll");
         }
 
