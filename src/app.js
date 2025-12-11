@@ -1,11 +1,11 @@
 "use strict";
 
-let Browse = "Browse.js";//$NON-NLS-L$
-let Error404 = "Error404.js";//$NON-NLS-L$
-let Home = "Home.js";//$NON-NLS-L$
-let ProductShow = "ProductShow.js";//$NON-NLS-L$
-let Checkout = "Checkout.js";//$NON-NLS-L$
-let OrderHistory = "OrderHistory.js";//$NON-NLS-L$
+let Browse = "Browse.js";
+let Error404 = "Error404.js";
+let Home = "Home.js";
+let ProductShow = "ProductShow.js";
+let Checkout = "Checkout.js";
+let OrderHistory = "OrderHistory.js";
 
 import Navbar from './views/components/Navbar.js';
 import Bottombar from './views/components/Bottombar.js';
@@ -20,31 +20,26 @@ import Products from './content/products.js';
 
 
 
-//********************** 
-//  GLOBAL VARIABLES
-//**********************
 var orderHistory = [];
 
 //adds some dummy orders to the history on startup
 let dummyOrders = () => {
-    let now = new Date(); //$NON-NLS-L$
+    let now = new Date(); 
     var twoDays = now - 1000 * 60 * 60 * 24 * 2;
     var fiveDays = now - 1000 * 60 * 60 * 24 * 5;
-    let order2 = new Order(900, new Date(fiveDays)); //$NON-NLS-L$
-    let order1 = new Order(68500, new Date(twoDays)); //$NON-NLS-L$
+    let order2 = new Order(900, new Date(fiveDays)); 
+    let order1 = new Order(68500, new Date(twoDays)); 
     orderHistory.push(order1);
     orderHistory.push(order2);
 }
 
-//load
 if(localStorage.getItem("orderHistory") !== null) {
-    //first add a couple dummies
     dummyOrders();
     //get and parse the stringified array
     let orders = JSON.parse(localStorage.getItem('orderHistory'));
     //construct the objects and put into object array
     for(let order of orders) {
-        let orderObj = new Order(parseInt(order[2]), new Date(order[0]), parseInt(order[1])); //$NON-NLS-L$
+        let orderObj = new Order(parseInt(order[2]), new Date(order[0]), parseInt(order[1])); 
         console.log(orderObj);
         orderHistory.unshift(orderObj);
     }
@@ -61,18 +56,14 @@ else {
 }
 //function to update and save locale
 var updateLocale = async(newLocale) => {
-    //update the locale
     locale = newLocale;
-    //store the new locale
     localStorage.setItem('locale', locale);
     console.log("Locale changed to: " + locale);
     
     //fetch new products list and refresh stringsJSON
     await getProductsList(locale);
 
-    //refresh the shopping cart
-    console.log(shoppingCart);
-    console.log(productList);
+    //refresh
     reloadCart();
 
     router();
@@ -102,7 +93,7 @@ var reloadCart = () => {
     saveCart();
 }
 
-//stringify the cart and persist
+//stringify the cart
 var saveCart = () => {
     let cartIds = [];
 
@@ -112,7 +103,7 @@ var saveCart = () => {
     localStorage.setItem("cart", JSON.stringify(cartIds));
 }
 
-//map of maps to hold both vehicles and droids
+//map of maps to hold vehicles and droids
 var productList = new Map();
 productList.set("droids", new Map());
 productList.set("vehicles", new Map());
@@ -122,14 +113,13 @@ let getProductsList = async() => {
     let droidMap = productList.get("droids");
     let vehicleMap = productList.get("vehicles");
 
-    //clear em out
     droidMap.clear();
     vehicleMap.clear();
 
     let productsJSON = await Products.loadProductCatalog();
 
     for(let item of productsJSON) {
-        //loop through parsed json and add to either droid Map or vehicle Map
+ 
         if(item.type == "droid") {
             droidMap.set(item.productID, item);
         }
@@ -138,17 +128,15 @@ let getProductsList = async() => {
         }
     }
 
-    //pick the "featured products"
     await getFeaturedProducts();
-    //load cart contents fromlocalStorage if available
     //localStorage.removeItem('cart');
     readCart();
 }
 
-//holds the items that the user adds to cart; schema: productID (int) : item (object)
+
 var shoppingCart = {};
 
-//load cart contents fromlocalStorage if available
+//load cart contents fromlocalStorage
 var readCart = () => {
     if(localStorage.getItem("cart") !== null) {
         console.log("found cart in storage, reconstructing...");
@@ -160,7 +148,7 @@ var readCart = () => {
         let cartIds = JSON.parse(cartIdString);
 
         for(let productAr of cartIds) {
-            if(productAr[1] == 'droid') { //$NON-NLS-L$
+            if(productAr[1] == 'droid') { 
                 let product = droidMap.get(parseInt(productAr[0]));
                 product.qty = parseInt(productAr[2]);
                 shoppingCart[productAr[0]] = product;
@@ -184,13 +172,13 @@ var addToCart = async (item) =>  {
         shoppingCart[item.productID] = item;
     }
 
-    //re-render the cart and navbar (for click listener)
+    //re-render the cart and navbar
     cart.innerHTML = await Cart.render();
     await Cart.after_render();
     await Navbar.after_render();
-    //display cart
+
     showCart();
-    //save it to localStorage
+
     saveCart();
 }
 
@@ -218,7 +206,7 @@ let getFeaturedProducts = async () => {
 
 export { shoppingCart, addToCart, showCart, router, locale, productList, updateLocale, orderHistory, featuredProducts, saveCart };
 
-// List of supported routes. Any url other than these routes will throw a 404 error
+// Supported routes
 const routes = {
     './' : Home, 
     './droids' : Browse,
@@ -229,22 +217,22 @@ const routes = {
     './checkout' : Checkout
 };
 
-//load background
+// call back
 particlesJS.load('particles-js', './plugins/assets/particlesjs-config.json', function() {
-    //callback
+    
 });
 
-// The router code. Takes a URL, checks against the list of supported routes and then renders the corresponding content page.
+
 const router = async () => {
 
-    // Lazy load view element:
+    // load view element:
     const header = null || document.getElementById('header_container');
     const content = null || document.getElementById('page_container');
     const footer = null || document.getElementById('footer_container');
     const cart = null || document.querySelector('.cartSlider');
     const ham = null || document.querySelector('.hamSlider');
 
-    //grab products from JSON file
+    //grab products from JSON
     if(productList.get("droids").size == 0 && productList.get("vehicles").size == 0) {
         await getProductsList();
     }
@@ -255,22 +243,19 @@ const router = async () => {
    
     header.innerHTML = await Navbar.render();
     await Navbar.after_render();
-    // footer.innerHTML = await Bottombar.render();
-    // await Bottombar.after_render();
 
-    //add some dummy orders if there's nothing there
     if(orderHistory.length == 0) {
         dummyOrders();
     }
 
-    // Get the parsed URl from the addressbar
+
     let request = Utils.parseRequestURL();
 
     // Parse the URL and if it has an id part, change it with the string ":id"
     let parsedURL = (request.resource ? './' + request.resource : './') + (request.id ? '/:id' : '') + (request.verb ? './' + request.verb : '')
     
-    // Get the page from our hash of supported routes.
-    // If the parsed URL is not in our list of supported routes, select the 404 page instead
+
+    // If the parsed URL is not in the list of supported routes - 404 page
     let page = routes[parsedURL] ? routes[parsedURL] : Error404
 
     //lazy load and then render the correct page
@@ -281,8 +266,7 @@ const router = async () => {
 }
 
 
-// Listen on hash change:
+
 window.addEventListener('hashchange', router);
 
-// Listen on page load:
 document.addEventListener('DOMContentLoaded', router);

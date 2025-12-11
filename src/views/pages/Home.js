@@ -7,7 +7,6 @@ let Home = {
         let welcomeTitle = i18n.getString("Home", "welcomeTitle");
         let welcomeSubtitle = i18n.getString("Home", "welcomeSubtitle");
 
-        //view is solely for HTML markup, contains no static text
         let view = `
                     <section class="welcome">
                         <h1 class="center">${welcomeTitle}</h1>
@@ -15,7 +14,6 @@ let Home = {
                     </section>
                     <div class="browseGrid homeGrid">`;
 
-        //create a box to display each of the 4 featured products
         featuredProducts.forEach((product, key) => {
 
             //string to give image an alt tag for accessibility

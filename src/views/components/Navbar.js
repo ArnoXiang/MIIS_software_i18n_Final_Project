@@ -2,12 +2,12 @@ import Utils from "../../services/Utils.js";
 import { locale, updateLocale, showCart} from "../../app.js";
 import i18n from "../../services/i18n.js";
 
-//global dropdown element reference
+
 let drop;
 
 let Navbar = {
     render: async () => {
-        //fetch locale-sensitive strings via i18n method
+
         let searchPlaceholder = i18n.getString("Navbar", "searchPlaceholder");
         let searchButtonLabel = i18n.getString("Navbar", "searchButtonLabel");
         let logoAlt = i18n.getString("Navbar", "logoAlt");
@@ -73,19 +73,18 @@ let Navbar = {
     },
     after_render: async () => {
 
-        //cart slider functionality
         var cartIcons = document.querySelectorAll(".cartIcon");
-        //show/hide the cart when cart icon is clicked
+        //show and hide the cart icon is clicked
         for(let icon of cartIcons) {
             icon.addEventListener("click", showCart, false);
         }
 
-        //add click listener to clse cart when user clicks anywhere else on page
+        
         var overlayBG = document.querySelector('.bg');
         overlayBG.addEventListener('click', hideCart, false);
 
         var logo = document.querySelector("#logo");
-        //redirect to home on logo click
+        //redirect to home
         logo.addEventListener("click", function() {
             location.href="./#";
         }, false);
@@ -109,12 +108,11 @@ let Navbar = {
         drop = document.querySelector('#locale');
         //show selected locale in dropdown
         drop.value = locale;
-        //listen for locale changes
         drop.addEventListener("input", changeLocale, false);
     }
 }
 
-//function to hide cart (only when it's currently visible)
+//function to hide cart
 var hideCart = e => {
     console.log('click to hide triggered');
     var slider = document.querySelector(".cartSlider")

@@ -4,8 +4,7 @@ import i18n from '../../services/i18n.js';
 let Cart = {
     render: async () => {
         let total = 0;
-
-        //strings to hold all the text (to be used within the HTML template literal)
+        //used within the HTML template literal)
         let cartTitle = i18n.getString("Cart", "cartTitle");
         let noItemMsg = i18n.getString("Cart", "noItemMsg");
         let deleteAlt = i18n.getString("Cart", "deleteAlt");
@@ -13,7 +12,7 @@ let Cart = {
         let checkoutLabel = i18n.getString("Cart", "checkoutLabel");
         let closeAlt = i18n.getString("Cart", "closeAlt");
 
-        //view is solely for HTML markup, contains no static text
+        ////view is solely for HTML markup, contains no static text
         let view = `
                 <div class="cartHead">
                     <h1>${cartTitle}</h1>
@@ -21,7 +20,7 @@ let Cart = {
                 </div>
                 `;
 
-        //show cart contents or display message if no contents
+        //show cart contents. Display message if no contents
         if (Object.keys(shoppingCart).length === 0 && shoppingCart.constructor === Object) {
             view += `<h3>${noItemMsg}</h3>`;
         }
@@ -73,7 +72,7 @@ let Cart = {
     }
 }
 
-//handle changes in qty text input
+//handle changes qty input
 var updateQty = (e) => {
     if (e.srcElement.value != "") {
         let changedQtyKey = e.srcElement.id;
@@ -84,9 +83,8 @@ var updateQty = (e) => {
             product.qty = 0;
             delete shoppingCart[changedQtyKey];
         }
-        //save changes
+
         saveCart();
-        //re-render
         router();
     }
 }
@@ -97,9 +95,8 @@ var deleteItem = (e) => {
     console.log(deleteKey);
     shoppingCart[deleteKey].qty = 0;
     delete shoppingCart[deleteKey];
-    //save changes
+
     saveCart();
-    //re-render
     router();
 }
 

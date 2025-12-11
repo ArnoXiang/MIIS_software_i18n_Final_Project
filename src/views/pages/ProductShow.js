@@ -10,7 +10,6 @@ let ProductShow = {
 
     render: async () => {
 
-        //static strings to hold all the text (to be used within the HTML template literal)
         let qtyLabel = i18n.getString("ProductShow", "qtyLabel");
         let qtyOptions = [1, 2, 3, 4];
         let addToCartLabel = i18n.getString("ProductShow", "addToCartLabel");
@@ -19,12 +18,12 @@ let ProductShow = {
         let request = Utils.parseRequestURL();
         productID = parseInt(request.id);
         type = request.resource;
-        //get a reference to the correct product Map based on type
+        //get the reference product map based on type
         let productMap = productList.get(type);
-        //get the correct product from the product Map based on ID and type
+        //get the product from the product map
         product = productMap.get(productID);
 
-        //return HTML markup
+        //HTML markup
         return `
             <section class="productShow">
                 <article class="leftDetailPane">
@@ -53,17 +52,15 @@ let ProductShow = {
     , after_render: async () => {
         const addButt = document.querySelector(".addToCart");
 
-        //there's a bug where adding same item with different
+ 
         addButt.addEventListener("click", getQtyandAddToCart, false);
     }
 }
 
 var getQtyandAddToCart = () => {
-    //get the qty and modify selected item
     let qtySel = document.querySelector(".qtyDrop");
     let qty = parseInt(qtySel.options[qtySel.selectedIndex].value)
     product.qty += qty;
-    //pass item to cart
     addToCart(product);
 
 }

@@ -4,7 +4,7 @@ import i18n from "../../services/i18n.js";
 class Order {
     constructor(total, newDate, number) {
         if(newDate == null) {
-            this.orderDate = new Date(); //$NON-NLS-L$
+            this.orderDate = new Date(); 
         }else {
             this.orderDate = newDate;
         }
@@ -26,8 +26,8 @@ class Order {
     getOrderStatus() {
         //calculate diff
         let oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-        let now = new Date(); //$NON-NLS-L$
-        var diffDays = Math.floor(Math.abs((this.orderDate.getTime() - now.getTime())/(oneDay))); //$NON-NLS-L$
+        let now = new Date(); 
+        var diffDays = Math.floor(Math.abs((this.orderDate.getTime() - now.getTime())/(oneDay))); 
 
         if(diffDays < 2) {
             return i18n.getString("Order", "statusProcessing");

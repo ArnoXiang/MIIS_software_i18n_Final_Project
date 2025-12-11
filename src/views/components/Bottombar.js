@@ -6,7 +6,7 @@ let Bottombar = {
     render: async () => {
         let menuAlt = i18n.getString("Bottombar", "menuAlt");
 
-        let view =  /*html*/`
+        let view =  `
             <img src="img/ham.svg" class="hamTrigger" alt="${menuAlt}">
         `
         return view

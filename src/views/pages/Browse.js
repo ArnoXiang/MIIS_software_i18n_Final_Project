@@ -12,13 +12,12 @@ let Browse = {
 
         let productMap = null;
 
-        // FIX: Avoid string concatenation by using complete localized strings
+        // Avoid string concatenation by using complete localized strings
         // Each title string is now a full, translatable unit instead of fragments
         let title;
 
         if(type == "droids") {
             productMap = productList.get('droids');
-            // Retrieve complete localized title for droids category
             title = i18n.getString("Browse", "browseTitleDroids");
         }
         else if(type == "vehicles") {
@@ -31,7 +30,6 @@ let Browse = {
             title = i18n.getString("Browse", "browseTitleAll");
         }
 
-        //view is solely for HTML markup, contains no static text
         let view = `<section class="browsePage">
                         <h1>${title}</h1>
                         <div class="browseGrid">`;
@@ -60,7 +58,6 @@ let Browse = {
 
         let articles = grid.querySelectorAll("article");
 
-        //click listener to redirect on product click
         for(let curProduct of articles) {
             curProduct.addEventListener("click", function() {
                 location.href=`./#/${type}/` + curProduct.id;

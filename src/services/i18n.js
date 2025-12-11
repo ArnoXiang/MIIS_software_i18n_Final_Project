@@ -3,7 +3,6 @@ import { locale, updateLocale } from '../app.js';
 var stringsJSON = {};
 
 const i18n = {
-
     //load resource json based on locale
     loadStringsJSON: async (newLocale) => {
         const options = {
@@ -36,20 +35,18 @@ const i18n = {
 
 
     },
-    //return the locale based link to html file within the 'static' folder
+    //return the locale based link to html
     getHTML: () => {
-        return `${locale}/terms.html`; //$NON-NLS-L$ 
+        return `${locale}/terms.html`;  
     },
     //format date accoring to locale
     formatDate: (date) => {
         var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-        return new Intl.DateTimeFormat([locale, 'en-US'], options).format(date); //$NON-NLS-L$
+        return new Intl.DateTimeFormat([locale, 'en-US'], options).format(date); 
     },
-    // Uses Intl.DateTimeFormat which is based on CLDR data
+    // Uses Intl.DateTimeFormat
     formatShortDate: (date) => {
         try {
-            // Use CLDR-based Intl.DateTimeFormat for locale-specific date formatting
-            // This automatically handles different date formats for each locale
             const options = { 
                 year: 'numeric', 
                 month: '2-digit', 
@@ -79,7 +76,7 @@ const i18n = {
                 const monthLabel = monthFormatter.format(date);
                 monthOptions.push({ value: formattedNumber, label: monthLabel });
             } catch (err) {
-                // Fallback to numeric format
+                // Fallback
                 monthOptions.push({ value: formattedNumber, label: formattedNumber });
             }
         }
@@ -99,10 +96,10 @@ const i18n = {
         return yearOptions;
     },
 
-    // Determine date input order based on locale (returns 'year-month' or 'month-year')
+    // Determine date input order based on locale (returns "year-month" or "month-year")
     getDateInputOrder: () => {
         try {
-            // Use Intl.DateTimeFormat to detect the locale's preferred date format
+            // Use Intl.DateTimeFormat to detect the locale's standard date format
             const sampleDate = new Date(2025, 11, 7); // Dec 7, 2025
             const formatter = new Intl.DateTimeFormat(locale, { 
                 year: 'numeric', 
@@ -114,10 +111,10 @@ const i18n = {
             const yearIndex = parts.findIndex(p => p.type === 'year');
             const monthIndex = parts.findIndex(p => p.type === 'month');
             
-            // If year comes before month, it's year-month format (e.g., ja-JP, zh-CN)
+            // If year comes before month, it's year-month format (ja-JP)
             return yearIndex < monthIndex ? 'year-month' : 'month-year';
         } catch (err) {
-            // Default to month-year for English
+            // Default to month-year for en-US
             return 'month-year';
         }
     },
@@ -127,15 +124,13 @@ const i18n = {
         const monthOptions = this.getMonthOptions();
         const yearOptions = this.getYearOptions(10);
         const order = this.getDateInputOrder();
-        
-        // Get localized labels with fallback
         const yearLabel = stringsJSON["Checkout"]?.["expDateYearLabel"] || "YY";
         const monthLabel = stringsJSON["Checkout"]?.["expDateMonthLabel"] || "MM";
         
         let html = '';
         
         if (order === 'year-month') {
-            // Year first (e.g., Japanese, Chinese)
+            // Year first (ja-JP)
             html += `
                                     <select id="expDateYear" name="expDateYear" class="checkoutInput">
                                         <option value="" disabled selected hidden>${yearLabel}</option>`;
@@ -153,7 +148,7 @@ const i18n = {
             html += `
                                     </select>`;
         } else {
-            // Month first (e.g., English, Dutch)
+            // Month first 
             html += `
                                     <select id="expDate" name="expDate" class="checkoutInput">
                                         <option value="" disabled selected hidden>${monthLabel}</option>`;
@@ -176,7 +171,7 @@ const i18n = {
     }
 }
 
-//used to determine the correct currency symbol
+//Determine the correct currency symbol
 var currencyMap = {
     'en-US': 'USD',
     'zh-CN': 'CNY',
@@ -185,7 +180,6 @@ var currencyMap = {
 };
 
 //function to perform rough conversion from galactic credits to real currencies
-//Disabled for project
 var convertCurrency = (price) => {
     return price;
 }

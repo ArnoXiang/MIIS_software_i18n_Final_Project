@@ -4,14 +4,12 @@ import i18n from '../../services/i18n.js';
 
 import { Order } from "../classes/Order.js";
 
-//TODO: add click listeners for updating qty or deleting items from cart
 
 var total;
 
 let Checkout = {
 
     render: async () => {
-        //static string to hold all the text (to be used within the HTML template literal)
         let checkoutTitle = i18n.getString("Checkout", "checkoutTitle");
         let shipSectionLabel = i18n.getString("Checkout", "shipSectionLabel");
         let firstNameLabel = i18n.getString("Checkout", "firstNameLabel");
@@ -183,7 +181,7 @@ let Checkout = {
     }
 }
 
-//handle changes in qty text input
+//handle changes in text input
 var updateQty = (e) => {
     if (e.srcElement.value != "") {
         let changedQtyKey = e.srcElement.id;
@@ -194,9 +192,7 @@ var updateQty = (e) => {
             product.qty = 0;
             delete shoppingCart[changedQtyKey];
         }
-        //save changes
         saveCart();
-        //re-render
         router();
     }
 }
@@ -207,18 +203,16 @@ var deleteItem = (e) => {
     console.log(deleteKey);
     shoppingCart[deleteKey].qty = 0;
     delete shoppingCart[deleteKey];
-    //save changes
     saveCart();
-    //re-render
     router();
 }
 
 //handle order placement
 var placeOrder = () => {
-    let order = new Order(total, new Date()); //$NON-NLS-L$
+    let order = new Order(total, new Date()); 
     saveOrder(order);
     orderHistory.unshift(order);
-    //zero out the qty for each item before removing it
+
     for (let key in shoppingCart) {
         let product = shoppingCart[key];
         product.qty = 0;
@@ -234,7 +228,7 @@ var placeOrder = () => {
 
 let saveOrder = (newOrder) => {
     let orders = [];
-    let orderString = [newOrder.orderDate.toString(), newOrder.orderNumber.toString(), newOrder.total.toString()]; //$NON-NLS-L$
+    let orderString = [newOrder.orderDate.toString(), newOrder.orderNumber.toString(), newOrder.total.toString()]; 
     if (localStorage.getItem('orderHistory') === null) {
         //no saved orders
         orders.unshift(orderString);
