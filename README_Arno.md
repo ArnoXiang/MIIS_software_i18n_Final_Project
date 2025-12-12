@@ -10,7 +10,6 @@ This is a final project submission for **TRLM8620: Software Localization & Inter
 
 - 🇺🇸 **English (en-US)**
 - 🇯🇵 **Japanese (ja-JP)**
-- 🇳🇱 **Dutch (nl-NL)**
 
 ## Key Features
 
@@ -178,7 +177,7 @@ Software Localization & Internationalization (TRLM8620)
 
 ## License
 
-ISC
+MIT
 
 ## Notes
 
